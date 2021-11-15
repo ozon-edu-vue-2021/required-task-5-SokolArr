@@ -1,33 +1,73 @@
 <template>
-<div class="card-wrapper">
-  <div class="card-header">
+  <div class="card-wrapper">
+    <div class="card-header">
+    </div>
+    <div class="img-wrapper">
+      <img class="img" :src="image" height="100%" width="100%" alt="img" />
+    </div>
+    <div class="card-info-wrapper">
+      <div class="price">{{ cardPrice }}₽</div>
+      <br>
+      <div class="card-name">{{ cardName }}</div>
+      <br>
+      <div class="card-info">{{ cardInfo }}</div>
+    </div>
+    <button
+      type="button"
+      class="btn add-to-card"
+      @click="addToCart"
+    >
+      В корзину
+    </button>
   </div>
-  <div class="img">
-      <img src="../../images/6123150777.webp" height="100%" width="100%" />
-  </div>
-  <div class="card-info-wrapper">
-    <div class="price">{{price}}</div>
-    <br>
-    <div class="card-info">{{cardInfo}}</div>
-  </div>
-  <button type="button" class="btn add-to-card"> В корзину</button>
-</div>
 </template>
 
 <script>
 export default {
   name: "ProdCard",
-  data(){
-    return{
-      cardInfo: 'Ягодная смесь для чая с облепихой и имбирем Мираторг, замороженная, 300 г',
-      price: '50p'
+  data() {
+    return {
+      productData: {}
+    };
+  },
+  mounted() {
+    this.productData.id = this.cardId;
+    this.productData.name = this.cardName;
+    this.productData.info = this.cardInfo;
+    this.productData.price = this.cardPrice;
+    this.productData.image = this.image;
+  },
+  props: {
+    cardId: {
+      type: String,
+      default: ""
+    },
+    cardName: {
+      type: String,
+      default: "Стандартное название"
+    },
+    cardInfo: {
+      type: String,
+      default: "Стандартное описание"
+    },
+    cardPrice: {
+      type: Number,
+      default: 0
+    },
+    image: {
+      type: String
+    }
+  },
+  methods: {
+    addToCart() {
+      this.$emit("addToCart", this.productData);
     }
   }
 };
 </script>
 
 <style scoped>
-.card-wrapper{
+.card-wrapper {
   width: 100%;
   height: 100%;
   padding: 10px;
@@ -37,7 +77,8 @@ export default {
   justify-content: space-between;
 
 }
-.img{
+
+.img-wrapper {
   height: auto;
   width: auto;
   margin-left: auto;
@@ -45,7 +86,8 @@ export default {
   /*border: 1px solid black;*/
   border-radius: 6px;
 }
-.card-info-wrapper{
+
+.card-info-wrapper {
   /*border: 1px solid black;*/
   border-radius: 6px;
   margin-top: 10px;
@@ -53,16 +95,22 @@ export default {
   width: 100%;
   min-height: 60px;
 }
-.card-header{
+
+.card-header {
   margin-bottom: 6px;
 }
-.price{
+
+.price {
   font-weight: bold;
 }
-.card-info{
+
+.card-info {
   color: #545454;
+  height: 60px;
+  overflow: hidden;
 }
-.btn{
+
+.btn {
   background: #005bff;
   color: white;
   border: 0;
@@ -72,10 +120,13 @@ export default {
   font-weight: bold;
   font-size: 1em;
 }
-.btn:hover{
+
+.btn:hover {
   background: #0c57d7;
+  cursor: pointer;
 }
-.btn:active{
+
+.btn:active {
   background: #063587;
 }
 </style>

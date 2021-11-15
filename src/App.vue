@@ -1,29 +1,34 @@
 <template>
   <div id="app">
-    <MainWrapper/>
+    <MainWrapper />
   </div>
 </template>
 
 <script>
 import MainWrapper from "@/assets/components/MainWrapper";
+
+
 export default {
   name: "App",
   components: {
     MainWrapper
-  },
+  }
 };
 </script>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Play&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@100;200&family=Play&display=swap');
-html{
+
+html {
   /*font-family: "Play", serif;*/
   font-family: 'Exo 2', sans-serif;
 }
-body{
+
+body {
   background: #eeeeee;
 }
+
 #app {
   height: 100%;
 }

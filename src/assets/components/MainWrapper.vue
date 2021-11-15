@@ -1,7 +1,10 @@
 <template>
   <div class="main-wrapper">
-    <HeaderWrapper/>
-    <CardsMainWrapper v-if="true"/>
+    <HeaderWrapper />
+    <router-view />
+    <!--    -->
+    <!--    <CardsMainWrapper v-if="true"/>-->
+
     <div class="footer">
       <div class="water-mark">Сделано А.И. 2021 Route 256</div>
     </div>
@@ -9,19 +12,20 @@
 </template>
 
 <script>
-import CardsMainWrapper from "@/assets/components/CardsMainWrapper";
+// import CardsMainWrapper from "@/assets/components/CardsMainWrapper";
 import HeaderWrapper from "@/assets/components/HeaderWrapper";
+
 export default {
   name: "MainWrapper",
-  components:{
-    CardsMainWrapper,
-    HeaderWrapper,
-  },
+  components: {
+    // CardsMainWrapper,
+    HeaderWrapper
+  }
 };
 </script>
 
 <style scoped>
-.main-wrapper{
+.main-wrapper {
   margin-left: auto;
   margin-right: auto;
   margin-top: 20px;
@@ -29,16 +33,17 @@ export default {
   padding: 10px;
   width: auto;
   max-width: 1600px;
-  min-width: 700px;
+  min-width: 940px;
   /*max-height: 1200px;*/
   border: 1px solid #c2c2c2;
   border-radius: 6px;
   display: flex;
   flex-direction: column;
   background: white;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Параметры тени */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Параметры тени */
 }
-.footer{
+
+.footer {
   width: 100%;
   padding-left: 5px;
   padding-right: 5px;
@@ -51,7 +56,8 @@ export default {
   align-items: center;
   justify-content: flex-end;
 }
-.water-mark{
+
+.water-mark {
   color: #929292;
   font-style: italic;
   margin-right: 20px;

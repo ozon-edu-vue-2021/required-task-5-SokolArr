@@ -1,22 +1,49 @@
 <template>
-  <div class="header-main">
-    <div class="in-header title">
-      <div class="title-text"> Магазин случайных продуктов!
+  <div>
+    <div class="header-main">
+      <div class="in-header title">
+        <div class="title-text">
+          Магазин случайных продуктов!
+        </div>
       </div>
+      <router-link v-if=CART.length to="cart">
+        <div class="in-header cart" style="text-align: center">
+          В корзине: {{ CART.length }}
+        </div>
+      </router-link>
+      <router-link v-else to="cart">
+        <div class="in-header cart">
+          Корзина
+        </div>
+      </router-link>
     </div>
-    <div class="in-header cart">
-      В корзине: {{ inCart }}
+    <div class="menu">
+      <router-link :to="{name: 'catalog'}">
+        <div class="in-menu catalog">
+          ⌂ Каталог
+        </div>
+      </router-link>
+      <router-link :to="{name: 'favorites'}">
+        <div class="in-menu favorites">
+          ☆ Избранное
+        </div>
+      </router-link>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "HeaderWrapper",
   data() {
-    return {
-      inCart: 0
-    };
+    return {};
+  },
+  computed: {
+    ...mapGetters([
+      "CART"
+    ])
   }
 };
 </script>
@@ -32,11 +59,12 @@ export default {
   display: flex;
   justify-content: space-between;
   align-content: center;
-  margin-bottom: 10px;
+  margin-bottom: 0;
   align-items: center;
   border-radius: 6px;
   background: #005bff;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.5); /* Параметры тени */
+  z-index: 1;
 }
 
 .in-header {
@@ -45,12 +73,13 @@ export default {
   align-items: center;
 }
 
-.cart {
+.in-header.cart {
+  color: white;
   /*border: 1px solid black;*/
   border-left: 2px solid #0053e6;
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
-  min-width: fit-content;
+  width: fit-content;
   height: 60px;
   margin-top: auto;
   margin-bottom: auto;
@@ -77,5 +106,50 @@ export default {
 
 .title-text {
   margin-left: 14px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+}
+
+.in-menu {
+  color: white;
+  background: #005bff;
+  border-radius: 10px;
+  margin: 6px;
+  width: 200px;
+  height: 40px;
+  padding: 6px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  font-size: 1.2em;
+  text-align: center;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 1); /* Параметры тени */
+}
+
+a {
+  text-decoration: none;
+}
+
+.catalog {
+  margin-left: 0;
+}
+
+.catalog:hover {
+  background: #063587;
+}
+
+.favorites:hover {
+  background: #063587;
+}
+
+.favorites:active {
+  background: #042969;
+}
+
+.catalog:active {
+  background: #042969;
 }
 </style>

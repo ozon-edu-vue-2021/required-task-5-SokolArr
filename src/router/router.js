@@ -8,12 +8,17 @@ let router = new Router({
   routes: [
     {
       path: "/",
-      // name: "catalog",
+      name: "catalog",
+      component: CardsMainWrapper,
+    },
+    {
+      path: "/favorites",
+      name: "favorites",
       component: CardsMainWrapper,
     },
     {
       path: "/cart",
-      // name: "cart",
+      name: "cart",
       component: CartWrapper,
       props: true,
     },

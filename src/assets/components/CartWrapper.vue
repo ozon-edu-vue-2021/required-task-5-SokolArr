@@ -6,12 +6,13 @@
     <div class="cart-main">
       <div class="cart-order">
         <div class="tools">
-          Tools
           <div class="in-tools">
-            <label>
-              <input type="checkbox" />
+            <div @click="selectAll" class="select">
               Выбрать все
-            </label>
+            </div>
+            <div @click="deleteAll" class="delete">
+              Удалить все
+            </div>
           </div>
 
         </div>
@@ -28,6 +29,8 @@
               :product-data="product"
               :number="index"
               :count="1"
+              @counterHandler="counterHandler"
+              @deleteFromCart="deleteFromCart(index)"
             />
           </div>
           <div v-else style="font-size:1.2em">
@@ -39,7 +42,7 @@
       <div class="cart-details">
         <div class="btn-wrapper-upper">
           <div class="btn-wrapper">
-            <button type="button" class="btn go-to-offer">
+            <button type="button" class="btn go-to-offer" @click="goToOffer">
               Продолжить оформление
             </button>
           </div>
@@ -47,11 +50,18 @@
         <div class="in-cart-details">
           В корзине
           <br>
-          <br>
-          <li>Товары ({{ CART.length }})</li>
+          <ul>
+            <li
+              v-for="item in CART"
+              :key="item.id"
+            >
+              {{ item.name }}, x{{ item.quantity }}
+            </li>
+          </ul>
+
         </div>
         <div class="full-price">
-          Общая стоимость {{ fullPrice }}₽
+          Общая стоимость {{ FULL_PRICE }}₽
         </div>
       </div>
     </div>
@@ -71,18 +81,40 @@ export default {
   },
   computed: {
     ...mapGetters([
-      "CART"
-    ]),
-    fullPrice() {
-      let fullPrice = 0;
-      this.CART.map(el => {
-        fullPrice += el.price;
-      });
-      return fullPrice;
-    }
+      "CART", "FULL_PRICE"
+    ])
+  },
+  mounted() {
+    this.DO_FULL_PRICE();
   },
   methods: {
-    ...mapActions([])
+    ...mapActions(["DELETE_FROM_CART", "DO_FULL_PRICE", "UPDATE_CART"]),
+    deleteFromCart(index) {
+      this.DELETE_FROM_CART(index);
+      console.log("delete " + index);
+    },
+    counterHandler() {
+      this.DO_FULL_PRICE();
+    },
+    selectAll() {
+      this.CART.map(el => el.checked = !el.checked);
+    },
+    deleteAll() {
+      console.log("delete all");
+      console.log(this.CART.filter(el => !el.checked));
+      this.UPDATE_CART(this.CART.filter(el => !el.checked));
+      this.DO_FULL_PRICE();
+    },
+    offer() {
+      return this.CART.map(el => el.name);
+    },
+    goToOffer() {
+      if (this.CART.length) {
+        alert(this.CART.map(el => `${el.name} ${el.price}x${el.quantity}`) + " Total " + this.FULL_PRICE + "₽");
+      } else {
+        alert("Add something to cart");
+      }
+    }
   }
 };
 </script>
@@ -219,4 +251,28 @@ export default {
   border-top: 1px solid #c2c2c2;
   font-size: 1.2em;
 }
+
+li {
+  margin-bottom: 6px;
+}
+
+.select {
+  color: #0053e6;
+  margin-right: 10px;
+}
+
+.select:hover {
+  color: #042969;
+  cursor: pointer;
+}
+
+.delete {
+  color: #e64f5c;
+}
+
+.delete:hover {
+  color: #75282e;
+  cursor: pointer;
+}
+
 </style>

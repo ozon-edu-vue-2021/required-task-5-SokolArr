@@ -36,6 +36,7 @@ export default {
     this.productData.info = this.cardInfo;
     this.productData.price = this.cardPrice;
     this.productData.image = this.image;
+    this.$set(this.productData, "quantity", Number(1));
   },
   props: {
     cardId: {

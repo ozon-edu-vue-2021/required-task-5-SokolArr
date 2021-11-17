@@ -2,7 +2,7 @@
   <div class="main-wrapper">
     <div class="start-column">
       <label> {{ number + 1 }}
-        <input type="checkbox">
+        <input type="checkbox" v-model="productData.checked">
       </label>
     </div>
     <div class="img-wrapper">
@@ -13,16 +13,21 @@
       <div class="card-info">{{ productData.info }}</div>
     </div>
     <div class="price">{{ productData.price }}₽</div>
-    <label class="input-label">
-      Колличество
-      <input
-        class="input"
-        type="number"
-        min="1" max="99"
-        :value="count"
-        v-on:click="counterHandler(count)"
-      >
-    </label>
+    <div class="last-column">
+      <label class="input-label">
+        Колличество
+        <input
+          class="input"
+          type="number"
+          min="1" max="99"
+          v-model="productData.quantity"
+          @input="counterHandler(productData.quantity)"
+        >
+      </label>
+      <div class="delete" @click="deleteFromCart">
+        удалить
+      </div>
+    </div>
   </div>
 </template>
 
@@ -39,16 +44,17 @@ export default {
     number: {
       type: Number,
       default: 0
-    },
-    count: {
-      type: Number,
-      default: 1
     }
   },
+  mounted() {
+    this.$set(this.productData, "checked", false);
+  },
   methods: {
-    counterHandler(count) {
-      this.count++;
-      this.$emit("counterHandler", count);
+    counterHandler() {
+      this.$emit("counterHandler");
+    },
+    deleteFromCart() {
+      this.$emit("deleteFromCart");
     }
   }
 };
@@ -74,14 +80,15 @@ export default {
 }
 
 .img-wrapper {
-  height: 160px;
-  width: 160px;
+
+  min-width: 120px;
+  min-height: 100px;
 }
 
 .card-info-wrapper {
   display: flex;
   flex-direction: column;
-  max-width: 280px;
+  max-width: 240px;
   max-height: 136px;
   overflow: hidden;
 }
@@ -92,7 +99,7 @@ export default {
 
 .input-label {
   width: 100px;
-  margin: 10px;
+  margin: 4px;
 }
 
 .input {
@@ -103,5 +110,25 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.start-column > label {
+  min-width: 40px;
+}
+
+.last-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.delete {
+  color: #e64f5c;
+}
+
+.delete:hover {
+  color: #75282e;
+  cursor: pointer;
 }
 </style>

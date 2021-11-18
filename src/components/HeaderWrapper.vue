@@ -6,10 +6,8 @@
           Магазин случайных продуктов!
         </div>
       </div>
-      <router-link v-if=CART.length to="cart">
-        <div class="in-header cart" style="text-align: center">
-          В корзине: {{ CART.length }}
-        </div>
+      <router-link v-if=CART.length to="cart" class="in-header cart" style="text-align: center">
+        В корзине: {{ CART.length }}
       </router-link>
       <router-link v-else to="cart" class="in-header cart">
         Корзина
@@ -124,17 +122,18 @@ a {
   text-decoration: none;
 }
 
+a.router-link-active.in-header.cart {
+  background: #004fde;
+  border-radius: 10px;
+  font-weight: 700;
+}
+
 a.router-link-exact-active {
   background: #ff005e;
   border-radius: 10px;
   font-weight: 700;
 }
 
-a.router-link-exact-active.in-header {
-  background: #004fde;
-  border-radius: 10px;
-  font-weight: 700;
-}
 
 .catalog {
   margin-left: 0;

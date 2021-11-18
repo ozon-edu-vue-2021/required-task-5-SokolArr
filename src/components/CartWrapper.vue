@@ -11,7 +11,7 @@
               Выбрать все
             </div>
             <div @click="deleteAll" class="delete">
-              Удалить все
+              Удалить выбранные
             </div>
           </div>
 
@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import ProdCardInCart from "@/assets/components/Cards/ProdCardInCart";
+import ProdCardInCart from "@/components/Cards/ProdCardInCart";
 import { mapActions } from "vuex";
 import { mapGetters } from "vuex";
 
@@ -91,7 +91,6 @@ export default {
     ...mapActions(["DELETE_FROM_CART", "DO_FULL_PRICE", "UPDATE_CART"]),
     deleteFromCart(index) {
       this.DELETE_FROM_CART(index);
-      console.log("delete " + index);
     },
     counterHandler() {
       this.DO_FULL_PRICE();
@@ -100,17 +99,13 @@ export default {
       this.CART.map(el => el.checked = !el.checked);
     },
     deleteAll() {
-      console.log("delete all");
-      console.log(this.CART.filter(el => !el.checked));
       this.UPDATE_CART(this.CART.filter(el => !el.checked));
       this.DO_FULL_PRICE();
     },
-    offer() {
-      return this.CART.map(el => el.name);
-    },
+
     goToOffer() {
       if (this.CART.length) {
-        alert(this.CART.map(el => `${el.name} ${el.price}x${el.quantity}`) + " Total " + this.FULL_PRICE + "₽");
+        alert(this.CART.map(el => `${el.name} ${el.price}₽x${el.quantity}`) + " Total " + this.FULL_PRICE + "₽");
       } else {
         alert("Add something to cart");
       }
@@ -132,7 +127,7 @@ export default {
   padding: 10px;
   background: #f8f8f8;
   border-radius: 6px;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5); /* Параметры тени */
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
   margin-bottom: 10px;
 }
 
@@ -178,6 +173,7 @@ export default {
   display: flex;
   flex-direction: row;
   align-content: center;
+  justify-content: space-between;
 }
 
 .cart-order-title {
@@ -190,7 +186,7 @@ export default {
   margin-bottom: 6px;
   border-radius: 6px;
   background: #005bff;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5); /* Параметры тени */
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
 }
 
 .text-title {

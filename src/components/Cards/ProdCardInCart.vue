@@ -68,7 +68,7 @@ export default {
   border: 1px solid #b8b8b8;
   background: white;
   border-radius: 6px;
-  box-shadow: 0 0 8px rgba(5, 20, 191, 0.2); /* Параметры тени */
+  box-shadow: 0 0 8px rgba(5, 20, 191, 0.2);
   min-height: 160px;
   width: 100%;
   margin-top: 20px;

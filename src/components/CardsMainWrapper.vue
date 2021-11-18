@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="card-main-title">
-      Всего {{ this.$store.state.products.length }} товаров.
+      Сегодня у нас {{ this.$store.state.products.length }} товаров.
     </div>
     <div class="cards-main">
       <div
@@ -10,12 +10,9 @@
         :key=card.uid
       >
         <ProdCard
-          :card-id="card.uid"
-          :card-info="card.description"
-          :card-name="card.dish"
-          :card-price="Math.floor(Math.random()*1000)"
-          :image="randomProperty(images)"
+          :product-data="card"
           @addToCart="addToCart"
+          @addToFavorites="addToFavorites"
         />
       </div>
     </div>
@@ -24,7 +21,7 @@
 </template>
 
 <script>
-import ProdCard from "@/assets/components/Cards/ProdCard";
+import ProdCard from "@/components/Cards/ProdCard";
 import { mapActions } from "vuex";
 import { mapGetters } from "vuex";
 import * as images from "@/assets/images";
@@ -39,10 +36,6 @@ export default {
       images: images
     };
   },
-  mounted() {
-    this.GET_PRODUCTS_FROM_API();
-    this.GET_IMAGES_FROM_API();
-  },
   computed: {
     ...mapGetters([
       "PRODUCTS"
@@ -51,16 +44,14 @@ export default {
   methods: {
     ...mapActions([
       "GET_PRODUCTS_FROM_API",
-      "GET_IMAGES_FROM_API",
-      "ADD_TO_CART"
+      "ADD_TO_CART",
+      "TOGG_FAVORITES"
     ]),
-    randomProperty(obj) {
-      let keys = Object.keys(obj);
-      return obj[keys[keys.length * Math.random() << 0]];
-    },
     addToCart(data) {
       this.ADD_TO_CART(data);
-      console.log(data);
+    },
+    addToFavorites(data) {
+      this.TOGG_FAVORITES(data);
     }
   }
 };
@@ -72,14 +63,7 @@ export default {
   height: 100%;
   min-height: 1000px;
   margin-bottom: 20px;
-  /*border: 1px solid #9c9c9c;*/
   border-radius: 6px;
-
-  /*display: flex;*/
-  /*flex-direction: row;*/
-  /*flex-wrap: wrap;*/
-  /*align-content: flex-start;*/
-  /*justify-content: space-between;*/
 
   grid-gap: 1px;
   display: grid;
@@ -89,7 +73,7 @@ export default {
   overflow: auto;
   padding: 40px;
   background: #f8f8f8;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5); /* Параметры тени */
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
 }
 
 .card-main-title {
@@ -105,11 +89,7 @@ export default {
   border: 1px solid #b8b8b8;
   background: white;
   border-radius: 6px;
-  box-shadow: 0 0 8px rgba(5, 20, 191, 0.2); /* Параметры тени */
+  box-shadow: 0 0 8px rgba(5, 20, 191, 0.2);
 }
 
-.prod-card-wrapper:hover {
-  /*background: #eef1ff;*/
-  /*cursor: pointer;*/
-}
 </style>

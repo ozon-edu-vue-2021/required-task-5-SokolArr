@@ -1,22 +1,28 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
+import * as images from "@/assets/images";
 
 Vue.use(Vuex);
 
 let store = new Vuex.Store({
   state: {
     products: [],
-    images: [],
+    favorites: [],
+    isFavoriteEmpty: true,
     cart: [],
     fullPrise: 0,
   },
   mutations: {
     SET_PRODUCTS_TO_STATE: (state, products) => {
       state.products = products;
-    },
-    SET_IMAGES_TO_STATE: (state, images) => {
-      state.images = images;
+      state.products.map((el) => {
+        el.isFavorite = false;
+        el.quantity = 1;
+        el.price = Math.floor(Math.random() * 1000);
+        let keys = Object.keys(images);
+        el.image = images[keys[(keys.length * Math.random()) << 0]];
+      });
     },
     SET_CART: (state, productData) => {
       if (state.cart.length) {
@@ -25,7 +31,6 @@ let store = new Vuex.Store({
           if (el.id === productData.id) {
             isAlreadyExist = true;
             el.quantity = el.quantity + 1;
-            //console.log(el.quantity);
           }
         });
         if (!isAlreadyExist) {
@@ -34,6 +39,13 @@ let store = new Vuex.Store({
       } else {
         state.cart.push(productData);
       }
+    },
+    TOGGLE_FAVORITES: (state, productData) => {
+      state.products.map((el) => {
+        if (el.uid === productData.id) {
+          el.isFavorite = !el.isFavorite;
+        }
+      });
     },
     COMPUTE_FULL_PRICE: (state) => {
       state.fullPrise = 0;
@@ -47,6 +59,15 @@ let store = new Vuex.Store({
     },
     UPDATE_CART: (state, arr) => {
       state.cart = arr;
+    },
+    IS_FAVORITE_EMPTY(state) {
+      let tmp = true;
+      state.products.map((el) => {
+        if (el.isFavorite) {
+          tmp = false;
+        }
+      });
+      state.isFavoriteEmpty = tmp;
     },
   },
   actions: {
@@ -67,22 +88,11 @@ let store = new Vuex.Store({
           return error;
         });
     },
-    GET_IMAGES_FROM_API({ commit }) {
-      return axios("https://picsum.photos/v2/list?page=2&limit=50", {
-        method: "GET",
-      })
-        .then((images) => {
-          //console.log(images.data);
-          commit("SET_IMAGES_TO_STATE", images.data);
-          return images;
-        })
-        .catch((error) => {
-          console.log(error);
-          return error;
-        });
-    },
     ADD_TO_CART({ commit }, productData) {
       commit("SET_CART", productData);
+    },
+    TOGG_FAVORITES({ commit }, productData) {
+      commit("TOGGLE_FAVORITES", productData);
     },
     DO_FULL_PRICE({ commit }) {
       commit("COMPUTE_FULL_PRICE");
@@ -93,19 +103,22 @@ let store = new Vuex.Store({
     UPDATE_CART({ commit }, arr) {
       commit("UPDATE_CART", arr);
     },
+    IS_FAVORITE_EMPTY({ commit }) {
+      commit("IS_FAVORITE_EMPTY");
+    },
   },
   getters: {
     PRODUCTS(state) {
       return state.products;
-    },
-    IMAGES(state) {
-      return state.images;
     },
     CART(state) {
       return state.cart;
     },
     FULL_PRICE(state) {
       return state.fullPrise;
+    },
+    IS_EMPTY(state) {
+      return state.isFavoriteEmpty;
     },
   },
 });

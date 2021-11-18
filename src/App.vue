@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import MainWrapper from "@/assets/components/MainWrapper";
+import MainWrapper from "@/components/MainWrapper";
 
 
 export default {

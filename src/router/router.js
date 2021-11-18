@@ -1,7 +1,8 @@
 import Vue from "vue";
 import Router from "vue-router";
-import CardsMainWrapper from "@/assets/components/CardsMainWrapper";
-import CartWrapper from "@/assets/components/CartWrapper";
+import CardsMainWrapper from "@/components/CardsMainWrapper";
+import CartWrapper from "@/components/CartWrapper";
+import FavoritesWrapper from "@/components/FavoritesWrapper";
 
 Vue.use(Router);
 let router = new Router({
@@ -14,7 +15,7 @@ let router = new Router({
     {
       path: "/favorites",
       name: "favorites",
-      component: CardsMainWrapper,
+      component: FavoritesWrapper,
     },
     {
       path: "/cart",

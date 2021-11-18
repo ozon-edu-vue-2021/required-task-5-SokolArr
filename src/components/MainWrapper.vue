@@ -2,9 +2,6 @@
   <div class="main-wrapper">
     <HeaderWrapper />
     <router-view />
-    <!--    -->
-    <!--    <CardsMainWrapper v-if="true"/>-->
-
     <div class="footer">
       <div class="water-mark">Сделано А.И. 2021 Route 256</div>
     </div>
@@ -12,35 +9,38 @@
 </template>
 
 <script>
-// import CardsMainWrapper from "@/assets/components/CardsMainWrapper";
-import HeaderWrapper from "@/assets/components/HeaderWrapper";
+import HeaderWrapper from "@/components/HeaderWrapper";
+import { mapActions } from "vuex";
 
 export default {
   name: "MainWrapper",
   components: {
-    // CardsMainWrapper,
     HeaderWrapper
+  },
+  mounted() {
+    this.GET_PRODUCTS_FROM_API();
+  },
+  methods: {
+    ...mapActions([
+      "GET_PRODUCTS_FROM_API"
+    ])
   }
 };
 </script>
 
 <style scoped>
 .main-wrapper {
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin: 20px auto;
   padding: 10px;
   width: auto;
   max-width: 1600px;
   min-width: 940px;
-  /*max-height: 1200px;*/
   border: 1px solid #c2c2c2;
   border-radius: 6px;
   display: flex;
   flex-direction: column;
   background: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Параметры тени */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .footer {

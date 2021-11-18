@@ -11,22 +11,16 @@
           В корзине: {{ CART.length }}
         </div>
       </router-link>
-      <router-link v-else to="cart">
-        <div class="in-header cart">
-          Корзина
-        </div>
+      <router-link v-else to="cart" class="in-header cart">
+        Корзина
       </router-link>
     </div>
     <div class="menu">
-      <router-link :to="{name: 'catalog'}">
-        <div class="in-menu catalog">
-          ⌂ Каталог
-        </div>
+      <router-link :to="{name: 'catalog'}" class="in-menu catalog">
+        ⌂ Каталог
       </router-link>
-      <router-link :to="{name: 'favorites'}">
-        <div class="in-menu favorites">
-          ☆ Избранное
-        </div>
+      <router-link :to="{name: 'favorites'}" class="in-menu favorites">
+        ☆ Избранное
       </router-link>
     </div>
   </div>
@@ -55,7 +49,6 @@ export default {
   color: white;
   height: 60px;
   width: 100%;
-  /*border: 2px solid blue;*/
   display: flex;
   justify-content: space-between;
   align-content: center;
@@ -63,7 +56,7 @@ export default {
   align-items: center;
   border-radius: 6px;
   background: #005bff;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5); /* Параметры тени */
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
   z-index: 1;
 }
 
@@ -75,7 +68,6 @@ export default {
 
 .in-header.cart {
   color: white;
-  /*border: 1px solid black;*/
   border-left: 2px solid #0053e6;
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
@@ -100,7 +92,6 @@ export default {
   padding-right: 5px;
   margin: 0;
   height: 60px;
-  /*border: 1px solid black;*/
   font-size: 2em;
 }
 
@@ -131,6 +122,18 @@ export default {
 
 a {
   text-decoration: none;
+}
+
+a.router-link-exact-active {
+  background: #ff005e;
+  border-radius: 10px;
+  font-weight: 700;
+}
+
+a.router-link-exact-active.in-header {
+  background: #004fde;
+  border-radius: 10px;
+  font-weight: 700;
 }
 
 .catalog {
